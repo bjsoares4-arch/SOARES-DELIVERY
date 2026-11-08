@@ -1,0 +1,32 @@
+SOARES DELIVERY — PROJETO ANDROID (PARA GERAR APK)
+================================================
+Este ZIP é CÓDIGO-FONTE do aplicativo Android, NÃO é um APK compilado.
+Ele abre o site https://soares-delivery.pages.dev/ em um WebView.
+
+CAMINHO 1 — GitHub Actions (sem instalar Android Studio no PC)
+1. Crie um repositório GitHub e envie TODOS os arquivos e pastas deste projeto,
+   incluindo a pasta oculta .github/workflows.
+2. Abra a aba Actions do repositório.
+3. Execute o workflow "Gerar APK de teste SOARES DELIVERY" (Run workflow),
+   ou faça um commit na branch main.
+4. Aguarde a compilação. Ao concluir, abra a execução e baixe o artefato
+   SOARES_DELIVERY_APK_TESTE.
+5. Extraia o ZIP do artefato. Dentro estará app-debug.apk, para TESTES.
+6. Para que o botão Baixar APK apareça no site, NÃO publique o debug como
+   versão definitiva: gere primeiro uma versão RELEASE ASSINADA com uma chave
+   de assinatura própria, e renomeie o arquivo para SOARES_DELIVERY.apk.
+7. Publique esse APK na raiz do Cloudflare Pages junto com os arquivos do site.
+
+CAMINHO 2 — Android Studio
+1. Instale o Android Studio e configure Android SDK 35 e JDK 17.
+2. Abra a pasta do projeto. Este projeto não traz Gradle wrapper (o Gradle
+   não está incluído): configure o Gradle 8.9 na IDE ou use o GitHub Actions.
+3. Compile e gere um APK de teste. Para distribuir, gere um APK release assinado.
+
+IMPORTANTE
+- O app carrega o site online; precisa de internet.
+- A conexão e as credenciais públicas do Supabase continuam no site.
+- O projeto não inclui integração de pagamentos automáticos.
+- O WebView precisa ser testado com login, fotos e Pix em aparelhos reais.
+- Para versões futuras, guarde a chave de assinatura; sem ela, não é possível
+  atualizar o APK instalado com o mesmo identificador de pacote.
