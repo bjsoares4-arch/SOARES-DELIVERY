@@ -26,14 +26,29 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Instalar Android SDK
+      - name: Instalar Android SDK 35
+        shell: bash
         run: |
-          sdkmanager --install "platforms;android-35" "build-tools;35.0.0"
+          SDK_ROOT="${ANDROID_HOME:-$ANDROID_SDK_ROOT}"
+          SDKMANAGER="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+
+          if [ ! -x "$SDKMANAGER" ]; then
+            SDKMANAGER=$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager -print -quit)
+          fi
+
+          if [ -z "$SDKMANAGER" ] || [ ! -x "$SDKMANAGER" ]; then
+            echo "Erro: sdkmanager nao encontrado"
+            exit 1
+          fi
+
+          "$SDKMANAGER" --sdk_root="$SDK_ROOT" \
+            "platforms;android-35" \
+            "build-tools;35.0.0"
 
       - name: Gerar APK do SOARES DELIVERY
         run: gradle :app:assembleDebug --no-daemon
 
-      - name: Disponibilizar APK para download
+      - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
         with:
           name: SOARES_DELIVERY_APK_TESTE
